@@ -37,18 +37,18 @@ module.exports = {
       ]
     }
   ],
-  runSlash(client, interaction) {
+  runInteraction(client, interaction) {
     const eventChoices = interaction.options.getString('event');
 
     if (eventChoices == 'guildMemberAdd') {
       client.emit('guildMemberAdd', interaction.member);
-      interaction.reply({ content: 'Event guildMemberAdd émit!', ephemereal: true });
+      interaction.reply({ content: 'Event guildMemberAdd émit!', ephemeral: true });
     } else if (eventChoices == 'guildCreate') {
       client.emit('guildCreate', interaction.guild);
-      interaction.reply({ content: 'Event guildCreate émit!', ephemereal: true });
+      interaction.reply({ content: 'Event guildCreate émit!', ephemeral: true });
     } else {
       client.emit('guildMemberRemove', interaction.member);
-      interaction.reply({ content: 'Event guildMemberRemove émit!', ephemereal: true });
+      interaction.reply({ content: 'Event guildMemberRemove émit!', ephemeral: true });
     }
   }
 };
