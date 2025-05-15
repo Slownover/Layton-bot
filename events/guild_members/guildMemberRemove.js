@@ -2,23 +2,26 @@ const { MessageEmbed, Formatters } = require('discord.js');
 const dayjs = require('dayjs');
 
 module.exports = {
-  name: 'guildMemberAdd',
+  name: 'guildMemberRemove',
   once: false,
   async execute(client, member) {
     const creationTimestamp = Formatters.time(dayjs(member.user.createdTimestamp).unix(), Formatters.TimestampStyles.ShortDateTime);
     const relativeCreationTimestamp = Formatters.time(dayjs(member.user.createdTimestamp).unix(), Formatters.TimestampStyles.RelativeTime);
     const joinTimestamp = Formatters.time(dayjs(member.joinedTimestamp).unix(), Formatters.TimestampStyles.ShortDateTime);
     const relativeJoinTimestamp = Formatters.time(dayjs(member.joinedTimestamp).unix(), Formatters.TimestampStyles.RelativeTime);
+    const leftTimestamp = Formatters.time(dayjs().unix(), Formatters.TimestampStyles.ShortDateTime);
+    const relativeLeftTimestamp = Formatters.time(dayjs().unix(), Formatters.TimestampStyles.RelativeTime);
 
     const embed = new MessageEmbed()
       .setAuthor({ name: `${member.user.tag} (${member.id})`, iconURL: member.user.displayAvatarURL() })
-      .setColor('#21ff81')
-      .setDescription(`± Nom d'utilisateur: ${member}
+      .setColor('#dc143c')
+      .setDescription(`± Nom d'utilisateur: ${member.displayName}
         ± Créé le: ${creationTimestamp} (${relativeCreationTimestamp})
         ± Rejoint le: ${joinTimestamp} (${relativeJoinTimestamp})
+        ± Quitté le: ${leftTimestamp} (${relativeLeftTimestamp})
         `)
       .setTimestamp()
-      .setFooter({ text: 'L\'utilisateur a rejoint!' });
+      .setFooter({ text: 'L\'utilisateur a quitté!' });
 
     const logChannel = client.channels.cache.get('1372459854467301386');
     logChannel.send({ embeds: [embed] });
